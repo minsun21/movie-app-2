@@ -8,22 +8,37 @@ import Favorite from './Section/Favorite';
 
 function MovieDetail(props) {
     const movieId = props.match.params.movieId;
-    const [Movie, setMovie] = useState([]);
+    const [Movie, setMovie] = useState({});
     const [Casts, setCasts] = useState([]);
     const [ActorToggle, setActorToggle] = useState(false);
 
     useEffect(() => {
-        let endpointCrew = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`;
-        let endPointInfo = `${API_URL}movie/${movieId}?api_key=${API_KEY}`;
-        fetch(endPointInfo).then(response => response.json()).then(response => {
-            setMovie(response);
-        })
 
-        fetch(endpointCrew).then(response => response.json()).then(response => {
-            setCasts(response.cast);
-        })
-    }, []);
+        let endpointForMovieInfo = `${API_URL}movie/${movieId}?api_key=${API_KEY}&language=en-US`;
+        fetchDetailInfo(endpointForMovieInfo);
 
+
+    }, [])
+
+    const fetchDetailInfo = (endpoint) => {
+
+        fetch(endpoint)
+            .then(result => result.json())
+            .then(result => {
+                console.log(result)
+                setMovie(result)
+
+                let endpointForCasts = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`;
+                fetch(endpointForCasts)
+                    .then(result => result.json())
+                    .then(result => {
+                        console.log(result)
+                        setCasts(result.cast)
+                    })
+            })
+            .catch(error => console.error('Error:', error)
+            )
+    }
     return (
         <div>
             <div style={{ width: '85%', margin: '1rem auto' }}>
@@ -33,7 +48,7 @@ function MovieDetail(props) {
                     desc={Movie.overview} />
 
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Favorite movieInfo={Movie} movieId={movieId} />
+                    <Favorite movieInfo={Movie} id={movieId} />
                 </div>
 
                 <MoviInfo movie={Movie} />
