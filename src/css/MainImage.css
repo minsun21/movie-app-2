@@ -1,0 +1,15 @@
+
+.mainImage.txt{
+    position: absolute;
+    max-width: 500px;
+    bottom: 2rem;
+    margin-left: 2rem;
+}
+.mainImage.txt h2{
+    color: white;
+}
+
+.mainImage.txt p{
+    color: white;
+    font-size: 1rem;
+}

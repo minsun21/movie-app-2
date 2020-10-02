@@ -1,0 +1,13 @@
+.main {
+    width: 100%;
+    margin: 0;
+}
+
+.header{
+    width: 85%;
+    margin: 1rem auto;
+}
+.contents{
+    display: flex;
+    justify-content: center;
+}
