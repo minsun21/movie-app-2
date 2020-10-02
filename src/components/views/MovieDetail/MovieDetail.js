@@ -4,6 +4,7 @@ import MainImage from '../LandingPage/Sections/MainImage';
 import MoviInfo from './Section/MovieInfo';
 import { Row } from 'antd';
 import GridCards from '../commons/GridCards';
+import Favorite from './Section/Favorite';
 
 function MovieDetail(props) {
     const movieId = props.match.params.movieId;
@@ -30,11 +31,17 @@ function MovieDetail(props) {
                     image={`${IMAGE_BASE_URL}w1280${Movie.backdrop_path}`}
                     title={Movie.original_title}
                     desc={Movie.overview} />
-                <br />
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Favorite movieInfo={Movie} movieId={movieId} />
+                </div>
+
                 <MoviInfo movie={Movie} />
+                <br />
                 <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem' }}>
                     <button onClick={() => setActorToggle(!ActorToggle)}>Toggle Actor View</button>
                 </div>
+
                 {ActorToggle &&
                     <Row gutter={[16, 16]}>
                         {Casts && Casts.map((cast, index) => (
